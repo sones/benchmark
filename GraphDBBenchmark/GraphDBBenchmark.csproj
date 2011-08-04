@@ -36,6 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Benchmark\VTPS_PLINQ.cs" />
+    <Compile Include="Benchmark\VTPS_Parallel.cs" />
+    <Compile Include="Benchmark\VTPS_SingleThreaded.cs" />
     <Compile Include="Benchmark\VTPS_PartitionedParallel.cs" />
     <Compile Include="GrammarNodes\ClearNode.cs" />
     <Compile Include="GrammarNodes\ListNode.cs" />
