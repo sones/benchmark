@@ -40,6 +40,7 @@
     <Compile Include="Benchmark\VTPS_Parallel.cs" />
     <Compile Include="Benchmark\VTPS_SingleThreaded.cs" />
     <Compile Include="Benchmark\VTPS_PartitionedParallel.cs" />
+    <Compile Include="BenchmarkGrammar.cs" />
     <Compile Include="GrammarNodes\ClearNode.cs" />
     <Compile Include="GrammarNodes\ListNode.cs" />
     <Compile Include="GrammarNodes\StatementNode.cs" />
