@@ -112,7 +112,7 @@ namespace sones.GraphDBBenchmark.Benchmark
 
         public string PluginName
         {
-            get { return "VTPS_PartitionedParallel"; }
+            get { return "VTPS_SingleThreaded"; }
         }
 
         public PluginParameters<Type> SetableParameters
