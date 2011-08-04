@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3CD8DCF7-6CB7-4BDE-A62F-F52884F47273}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>GraphDBBenchmark</RootNamespace>
+    <AssemblyName>GraphDBBenchmark</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Benchmark\VTPS_PartitionedParallel.cs" />
+    <Compile Include="GrammarNodes\ClearNode.cs" />
+    <Compile Include="GrammarNodes\ListNode.cs" />
+    <Compile Include="GrammarNodes\StatementNode.cs" />
+    <Compile Include="Import\SimpleSocialNetwork.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="GrammarNodes\BenchmarkNode.cs" />
+    <Compile Include="Benchmark\IBenchmark.cs" />
+    <Compile Include="Import\IImport.cs" />
+    <Compile Include="Plugin\BenchmarkPluginManager.cs" />
+    <Compile Include="GrammarNodes\ImportNode.cs" />
+    <Compile Include="GrammarNodes\ABenchmarkGrammarNode.cs" />
+    <Compile Include="GrammarNodes\Converter.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Arithmetics, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\Arithmetics.dll</HintPath>
+    </Reference>
+    <Reference Include="BinaryStreamStructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\BinaryStreamStructure.dll</HintPath>
+    </Reference>
+    <Reference Include="CollectionWrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\CollectionWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Commons, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\Commons.dll</HintPath>
+    </Reference>
+    <Reference Include="DataStructures, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\DataStructures.dll</HintPath>
+    </Reference>
+    <Reference Include="DiscordianDate, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\DiscordianDate.dll</HintPath>
+    </Reference>
+    <Reference Include="DrainPipeLog, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\DrainPipeLog.dll</HintPath>
+    </Reference>
+    <Reference Include="ErrorHandling, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\ErrorHandling.dll</HintPath>
+    </Reference>
+    <Reference Include="GQLAggregates, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\GQLAggregates.dll</HintPath>
+    </Reference>
+    <Reference Include="GQLFunctions, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\GQLFunctions.dll</HintPath>
+    </Reference>
+    <Reference Include="GraphDBExport, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\GraphDBExport.dll</HintPath>
+    </Reference>
+    <Reference Include="GraphDBImport, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\GraphDBImport.dll</HintPath>
+    </Reference>
+    <Reference Include="GraphDSPluginManager, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\GraphDSPluginManager.dll</HintPath>
+    </Reference>
+    <Reference Include="GraphDSREST, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\GraphDSREST.dll</HintPath>
+    </Reference>
+    <Reference Include="GraphDSServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\GraphDSServer.dll</HintPath>
+    </Reference>
+    <Reference Include="GraphMLImport, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\GraphMLImport.dll</HintPath>
+    </Reference>
+    <Reference Include="HTML_IO, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\HTML_IO.dll</HintPath>
+    </Reference>
+    <Reference Include="HttpServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\HttpServer.dll</HintPath>
+    </Reference>
+    <Reference Include="IDrainPipe, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IDrainPipe.dll</HintPath>
+    </Reference>
+    <Reference Include="IGQLStatementPlugin, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IGQLStatementPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="IGraphDB, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IGraphDB.dll</HintPath>
+    </Reference>
+    <Reference Include="IGraphDBExport, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IGraphDBExport.dll</HintPath>
+    </Reference>
+    <Reference Include="IGraphDBExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IGraphDBExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="IGraphDBImport, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IGraphDBImport.dll</HintPath>
+    </Reference>
+    <Reference Include="IGraphDS, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IGraphDS.dll</HintPath>
+    </Reference>
+    <Reference Include="IGraphDSServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IGraphDSServer.dll</HintPath>
+    </Reference>
+    <Reference Include="IGraphFS, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IGraphFS.dll</HintPath>
+    </Reference>
+    <Reference Include="IGraphQL, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IGraphQL.dll</HintPath>
+    </Reference>
+    <Reference Include="InMemoryNonRevisioned, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\InMemoryNonRevisioned.dll</HintPath>
+    </Reference>
+    <Reference Include="IOInterface, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IOInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="IPluginable, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\IPluginable.dll</HintPath>
+    </Reference>
+    <Reference Include="Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ca48ace7223ead47, processorArchitecture=MSIL">
+      <HintPath>Dependencies\Irony.dll</HintPath>
+    </Reference>
+    <Reference Include="ISonesGQLAggregate, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\ISonesGQLAggregate.dll</HintPath>
+    </Reference>
+    <Reference Include="ISonesGQLFunction, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\ISonesGQLFunction.dll</HintPath>
+    </Reference>
+    <Reference Include="ISonesIndex, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\ISonesIndex.dll</HintPath>
+    </Reference>
+    <Reference Include="ISonesRESTService, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\ISonesRESTService.dll</HintPath>
+    </Reference>
+    <Reference Include="JSON_IO, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\JSON_IO.dll</HintPath>
+    </Reference>
+    <Reference Include="LanguageExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\LanguageExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="NewFastSerializer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\NewFastSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PluginDefinition, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\PluginDefinition.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyHyperGraph, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\PropertyHyperGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="QueryLog, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\QueryLog.dll</HintPath>
+    </Reference>
+    <Reference Include="QueryResult, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\QueryResult.dll</HintPath>
+    </Reference>
+    <Reference Include="RESTServicePluginManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\RESTServicePluginManager.dll</HintPath>
+    </Reference>
+    <Reference Include="Settings, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\Settings.dll</HintPath>
+    </Reference>
+    <Reference Include="ShortestPathAlgorithms, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\ShortestPathAlgorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="SlimLogFramework, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\SlimLogFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="SonesGraphDB, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\SonesGraphDB.dll</HintPath>
+    </Reference>
+    <Reference Include="SonesGraphQueryLanguage, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\SonesGraphQueryLanguage.dll</HintPath>
+    </Reference>
+    <Reference Include="SonesIndices, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\SonesIndices.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="TEXT_IO, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\TEXT_IO.dll</HintPath>
+    </Reference>
+    <Reference Include="TypeCodes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\TypeCodes.dll</HintPath>
+    </Reference>
+    <Reference Include="UserdefinedDataType, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\UserdefinedDataType.dll</HintPath>
+    </Reference>
+    <Reference Include="VersionedPluginManager, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\VersionedPluginManager.dll</HintPath>
+    </Reference>
+    <Reference Include="XML_IO, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Dependencies\XML_IO.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
