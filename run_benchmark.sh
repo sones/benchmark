@@ -53,15 +53,15 @@ if [ $option == "-r" ]; then
 
 	
 	if [ -x GraphDBBenchmark.exe ]; then
-		if which "mono-sgen" >/dev/null; then
-   	 	 mono-sgen --runtime=v4.0.30319 GraphDBBenchmark.exe
-			else
-				if which "mono" >/dev/null; then
+#		if which "mono-sgen" >/dev/null; then
+#   	 	 mono-sgen --runtime=v4.0.30319 GraphDBBenchmark.exe
+#			else
+#				if which "mono" >/dev/null; then
 	   			 mono --runtime=v4.0.30319 GraphDBBenchmark.exe
-	  			else
- 	   			 echo "You need to have MONO (>2.8) installed and in your path. Mono-SGEN is recommended.";
-	  			fi
-	 		fi
+#	  			else
+#	   			 echo "You need to have MONO (>2.8) installed and in your path. Mono-SGEN is recommended.";
+#	  			fi
+#	 		fi
 	else
    	 echo "You need to build before you run. Please use the buildSolution.sh script to do that first.";
    	 exit 1;
@@ -73,17 +73,17 @@ elif [ $option == "-d" ]; then
 	cd $DIRECTORY/GraphDBBenchmark/bin/Debug/
 
 	if [ -x GraphDBBenchmark.exe	]; then
-			if which "mono-sgen" >/dev/null; then
-			echo "Using MONO-sgen";
-   	 		mono-sgen --runtime=v4.0.30319 GraphDBBenchmark.exe	
-			else
-				if which "mono" >/dev/null; then
+#			if which "mono-sgen" >/dev/null; then
+#			echo "Using MONO-sgen";
+#   	 		mono-sgen --runtime=v4.0.30319 GraphDBBenchmark.exe	
+#			else
+#				if which "mono" >/dev/null; then
 					echo "Using MONO (with boehm-gc)";
 	   				mono --runtime=v4.0.30319 GraphDBBenchmark.exe
-	  			else
- 	   				echo "You need to have MONO (>2.8) installed and in your path. Mono-SGEN is recommended.";
-	  			fi
-	 fi
+#	  			else
+# 	   				echo "You need to have MONO (>2.8) installed and in your path. Mono-SGEN is recommended.";
+#	  			fi
+#	 fi
 	else
    	 echo "You need to build before you run. Please use the buildSolution.sh script to do that first.";
    	 exit 1;

@@ -33,11 +33,83 @@ Now you should see something similar to this:
 > Receiving objects: 100% (68/68), 26.94 KiB, done.
 > Resolving deltas: 100% (36/36), done.
 
+Now you need to retrieve the necessary submodules by running the command line in the benchmark source code folder:
 
+> git submodule init 
 
+And you should get an output similar to:
 
+> Submodule 'GraphDB' (git://github.com/sones/sones.git) registered for path 'GraphDB'
 
+The next step is to actually download the dependencies source-code:
 
+> git submodule update
+
+And you should get a similar to this output:
+
+> Cloning into GraphDB...
+> remote: Counting objects: 29982, done.
+> remote: Compressing objects: 100% (8398/8398), done.
+> remote: Total 29982 (delta 19895), reused 29623 (delta 19540)
+> Receiving objects: 100% (29982/29982), 12.82 MiB | 784 KiB/s, done.
+> Resolving deltas: 100% (19895/19895), done.
+> Submodule path 'GraphDB': checked out '3cf12e18262e15ba6db74b7800c69c670439cce0'
+
+You then need to compile the .sln file in the ./GraphDB folder. This will compile GraphDB and create some assembly (.dll) files. In the ./GraphDB/Applications/sonesGraphDB/bin folder will either a Debug or a Release folder exist. The contents of this directory need to be copied to the ./GraphDBBenchmark/Dependencies folder in order to compile the benchmark.sln file in the benchmark folder.
+
+The buildBenchmark.sh script will do the above for you and build the Benchmark tool (on Mono). This buildBenchmark script has a help built-in which can be displayed by running
+
+> buildBenchmark.sh -h
+
+Output:
+
+> sones GraphDB Benchmark Build Script (C) sones GmbH 2007-2011
+> -r build a release
+> -d build with debug symbols
+> -p build partially (can be combined with -r and -d)
+
+To run the benchmark project just run the compile result of GraphDB or use the ./run_benchmark.sh script (with appending -d or -r parameters)
 
 How to use
 ===========
+
+After you started the benchmark tool you are welcome by a short command overview and a command-line interface.
+
+By typing
+
+> LIST
+
+You will get a list of all available import and benchmark plug-in modules. For example you could create a simple social network with default values by running this command:
+
+> IMPORT 'SIMPLENETWORK'
+
+more IMPORT Examples:
+
+> IMPORT 'SIMPLENETWORK' OPTIONS (countOfUsers = 300000, minCountOfEdges = 50, maxCountOfEdges = 100)
+
+> IMPORT 'SUPERNODES' OPTIONS (countOfUsers = 5000000)
+
+At any time you can use the integrated WebShell to access the GraphDB behind the benchmark (for example: http://localhost:9975/WebShell)
+
+After importing / creating some data you can run the actual benchmark on that data:
+
+> BENCHMARK 'VTPS_PARTITIONEDPARALLEL' ITERATIONS = 10
+
+or: 
+
+> BENCHMARK 'SUPERNODES' ITERATIONS = 10
+
+For a deeper documentation of each import and benchmark plug-in please read the wiki article: http://developers.sones.de/wiki/doku.php?id=benchmarks
+
+Known problems
+===============
+
+Mono-SGEN from MONO 2.10.2 and 2.10.3 - monos simple generational garbage collector - will crash while importing data into GraphDB. Please use the standard BOEHM-GC.
+
+Discussion and Contact
+=======================
+
+Wiki article: http://developers.sones.de/wiki/doku.php?id=benchmarks
+Discussion Thread: http://forum.sones.de/phpbb/viewtopic.php?f=6&t=5&start=0
+
+Any bug found can be reported here: http://jira.sones.de
