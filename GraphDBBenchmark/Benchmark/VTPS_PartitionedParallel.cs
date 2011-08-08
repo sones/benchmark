@@ -61,20 +61,23 @@ namespace sones.GraphDBBenchmark.Benchmark
         {
             var vertexType = myGraphDS.GetVertexType<IVertexType>(null, null, new RequestGetVertexType(_interestingVertexType), (stats, vType) => vType);
             var vertexList = myGraphDS.GetVertices<List<IVertex>>(null, null, new RequestGetVertices(_interestingVertexType), (stats, vertices) => vertices.ToList());
-            Stopwatch sw = Stopwatch.StartNew();
+            List<double> tps = new List<double>();
+            long edgeCount= 0;
 
-            for (int i = 0; i < myIterations - 1; i++)
+            for (int i = 0; i < myIterations; i++)
             {
-                CountAllEdgesParallelPartitioner(vertexType, myGraphDS, vertexList);
+                Stopwatch sw = Stopwatch.StartNew();
+
+                edgeCount = CountAllEdgesParallelPartitioner(vertexType, myGraphDS, vertexList);
+
+                sw.Stop();
+
+                tps.Add(edgeCount / sw.Elapsed.TotalSeconds);
             }
 
-            var edgeCount = CountAllEdgesParallelPartitioner(vertexType, myGraphDS, vertexList);
+            MyWriteLine(String.Format("Traversed {0} edges.", edgeCount));
 
-            sw.Stop();
-
-            MyWriteLine(String.Format("Counted {0} edges.", edgeCount));
-
-            MyWriteLine(String.Format("Traversed {0} edges per second", edgeCount / (sw.Elapsed.TotalSeconds / myIterations)));
+            MyWriteLine(String.Format("Traversed {0} edges. Average: {1}TPS Median: {2}TPS StandardDeviation {3}TPS ", edgeCount, Statistics.Average(tps), Statistics.Median(tps), Statistics.StandardDeviation(tps)));
         }
 
         #endregion
@@ -154,7 +157,7 @@ namespace sones.GraphDBBenchmark.Benchmark
 
         public void Dispose()
         {
-           
+
         }
 
         #endregion

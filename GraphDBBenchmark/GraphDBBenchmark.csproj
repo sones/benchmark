@@ -36,14 +36,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Benchmark\SuperNodesBenchmark.cs" />
     <Compile Include="Benchmark\VTPS_PLINQ.cs" />
     <Compile Include="Benchmark\VTPS_Parallel.cs" />
     <Compile Include="Benchmark\VTPS_SingleThreaded.cs" />
     <Compile Include="Benchmark\VTPS_PartitionedParallel.cs" />
     <Compile Include="BenchmarkGrammar.cs" />
     <Compile Include="GrammarNodes\ClearNode.cs" />
+    <Compile Include="Benchmark\Statistics.cs" />
     <Compile Include="GrammarNodes\ListNode.cs" />
     <Compile Include="GrammarNodes\StatementNode.cs" />
+    <Compile Include="Import\SuperNodesImport.cs" />
     <Compile Include="Import\SimpleSocialNetwork.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="GrammarNodes\BenchmarkNode.cs" />
