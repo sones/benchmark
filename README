@@ -1,0 +1,21 @@
+sones GraphDB Benchmark Framework
+(C) sones GmbH 2011
+
+This is a benchmark framework to reproduce common use-cases and measure the behaviour and performance of sones GraphDB.
+
+The benchmark process itself is a two-step process:
+
+1. Generate and/or Import data
+2. Execute algorithms on the graph
+
+Because there are many different use-cases these both steps are made up by plug-ins which can be adressed using the integrated commandline.
+
+To get more information on the currently available Import and Benchmark Plug-Ins please refer to this dedicated benchmark documentation page: http://developers.sones.de/wiki/doku.php?id=benchmarks
+
+How to compile
+===============
+
+In order to successfully 
+
+How to use
+===========

@@ -1,0 +1,3 @@
+[submodule "GraphDB"]
+	path = GraphDB
+	url = git://github.com/sones/sones.git
