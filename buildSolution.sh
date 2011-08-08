@@ -26,7 +26,7 @@
 # -r	do a RELEASE build
 # -p	do a partial build (can be combined with -d/-r)
 #
-# Last changes: 31-July-2011, Daniel Kirstenpfad
+# Last changes: 08-August-2011, Daniel Kirstenpfad
 #
 
 echo "sones GraphDB Benchmark Build Script (C) sones GmbH 2007-2011";
@@ -60,9 +60,17 @@ fi
 
 if [ $option == "-r" ] || [ $option2 == "-r" ]; then
 	echo "Doing a release build";
+	cd GraphDB
+	./buildSolution.sh $option $option2
+	cd ..
+	cp ./GraphDB/Applications/sonesGraphDB/bin/Release/*.dll ./GraphDBBenchmark/Dependencies/
 	xbuild /property:Configuration=Release;
 elif [ $option == "-d" ] || [ $option2 == "-d" ]; then
 	echo "Doing a debug build";
+	cd GraphDB
+	./buildSolution.sh $option $option2
+	cd ..
+	cp ./GraphDB/Applications/sonesGraphDB/bin/Debug/*.dll ./GraphDBBenchmark/Dependencies/
 	xbuild;
 else
 	exit 0

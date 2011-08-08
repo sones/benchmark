@@ -15,7 +15,29 @@ To get more information on the currently available Import and Benchmark Plug-Ins
 How to compile
 ===============
 
-In order to successfully 
+In order to successfully compile the benchmark project you will need the following dependencies:
+
+- MONO 2.10.2 (mono-complete or mono-core & mono-wcf) or .NET Framework 4.0
+- sones GraphDB Community Edition (in ./GraphDB folder)
+
+In order to download the necessary dependencies you need to get the source-code of the benchmark project first with this command-line:
+
+> git clone git://github.com/sones/benchmark.git
+
+Now you should see something similar to this:
+
+> Cloning into benchmark...
+> remote: Counting objects: 68, done.
+> remote: Compressing objects: 100% (45/45), done.
+> remote: Total 68 (delta 36), reused 52 (delta 20)
+> Receiving objects: 100% (68/68), 26.94 KiB, done.
+> Resolving deltas: 100% (36/36), done.
+
+
+
+
+
+
 
 How to use
 ===========
