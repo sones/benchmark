@@ -60,17 +60,9 @@ fi
 
 if [ $option == "-r" ] || [ $option2 == "-r" ]; then
 	echo "Doing a release build";
-	cd GraphDB
-	./buildSolution.sh $option $option2
-	cd ..
-	cp ./GraphDB/Applications/sonesGraphDB/bin/Release/*.dll ./GraphDBBenchmark/Dependencies/
 	xbuild /property:Configuration=Release;
 elif [ $option == "-d" ] || [ $option2 == "-d" ]; then
 	echo "Doing a debug build";
-	cd GraphDB
-	./buildSolution.sh $option $option2
-	cd ..
-	cp ./GraphDB/Applications/sonesGraphDB/bin/Debug/*.dll ./GraphDBBenchmark/Dependencies/
 	xbuild;
 else
 	exit 0
