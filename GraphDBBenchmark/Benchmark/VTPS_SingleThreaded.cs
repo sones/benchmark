@@ -107,7 +107,7 @@ namespace sones.GraphDBBenchmark.Benchmark
             if (myParameters != null && myParameters.ContainsKey("vertexTypeName"))
                 interestingVertexType = (String)Convert.ChangeType(myParameters["vertexTypeName"], typeof(String));
 
-            return new VTPS_PartitionedParallel(interestingVertexType);
+            return new VTPS_SingleThreaded(interestingVertexType);
         }
 
         public string PluginName
