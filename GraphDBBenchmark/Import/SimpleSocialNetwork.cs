@@ -84,8 +84,17 @@ namespace GraphDBBenchmark.Import
                 ),
                 (stats, vType) => vType);
 
+            Console.Write("Imported User: ");
+
             for (long i = 0; i < _countOfUsers; i++)
             {
+                if (i % 1000 == 0)
+                {
+                    String iString = i.ToString();
+                    Console.Write(iString);
+                    Console.CursorLeft -= iString.Length;
+                }
+
                 vertexIDs.Add(CreateANewUser(usertype, i, vertexIDs, PRNG, myGraphDS));
             }
         }
