@@ -77,31 +77,33 @@ namespace sones.GraphDBBenchmark.Import
 
         public void SocialNetwork(IGraphDS myGraphDS)
         {
+            var transactionID = myGraphDS.BeginTransaction(null);
+
             #region ontology [API]
 
             var entityTypeDefinition = new VertexTypePredefinition(_vtEntity)
-                        .AddProperty(new PropertyPredefinition(_pName).SetAttributeType(typeof(String).Name));
+                        .AddProperty(new PropertyPredefinition(_pName, typeof(String).Name));
 
             var userTypeDefinition = 
 				new VertexTypePredefinition(_vtUser)
-                        .SetSuperVertexTypeName(_vtEntity)
-                        .AddOutgoingEdge(new OutgoingEdgePredefinition(_pHasVisited).SetAttributeType(_vtCity).SetMultiplicityAsMultiEdge());
+                        .SetSuperTypeName(_vtEntity)
+                        .AddOutgoingEdge(new OutgoingEdgePredefinition(_pHasVisited, _vtCity).SetMultiplicityAsMultiEdge());
 
             var placeTypeDefinition = 
 				new VertexTypePredefinition(_vtPlace)
-                        .SetSuperVertexTypeName(_vtEntity);
+                        .SetSuperTypeName(_vtEntity);
 
             var countryTypeDefinition = 
 				new VertexTypePredefinition(_vtCountry)
-                        .SetSuperVertexTypeName(_vtPlace)
-                        .AddIncomingEdge(new IncomingEdgePredefinition(_pCities).SetOutgoingEdge(_vtCity, _pInCountry));
+                        .SetSuperTypeName(_vtPlace)
+                        .AddIncomingEdge(new IncomingEdgePredefinition(_pCities, _vtCity, _pInCountry));
 
             var cityTypeDefinition = 
 				new VertexTypePredefinition(_vtCity)
-                        .SetSuperVertexTypeName(_vtPlace)
-                        .AddOutgoingEdge(new OutgoingEdgePredefinition(_pInCountry).SetAttributeType(_vtCountry));
+                        .SetSuperTypeName(_vtPlace)
+                        .AddOutgoingEdge(new OutgoingEdgePredefinition(_pInCountry, _vtCountry));
 
-            Dictionary<String, IVertexType> vertexTypes = myGraphDS.CreateVertexTypes(null, null,
+            Dictionary<String, IVertexType> vertexTypes = myGraphDS.CreateVertexTypes(null, transactionID,
                 new RequestCreateVertexTypes(new List<VertexTypePredefinition> 
 					{ 	entityTypeDefinition, 
 						userTypeDefinition, 
@@ -114,7 +116,7 @@ namespace sones.GraphDBBenchmark.Import
             #endregion
 
             #region country [GQL]
-            ExecuteQuery("insert into " + _vtCountry + " values ( " + _pName + " = 'UK' )", myGraphDS);
+            ExecuteQuery("insert into " + _vtCountry + " values ( " + _pName + " = 'UK' )", myGraphDS, transactionID);
 
             #endregion
 
@@ -123,7 +125,7 @@ namespace sones.GraphDBBenchmark.Import
             var cityVertexIDs = new List<long>();
             foreach (var aCity in new List<String> { "London", "Manchester", "Edinburgh", "Cambridge", "Oxford" })
             {
-                cityVertexIDs.Add(ExecuteQuery("insert into " + _vtCity + " values ( " + _pName + " = '" + aCity + "', " + _pInCountry + " = REF(" + _pName + " = 'UK'))", myGraphDS).First().GetProperty<long>("VertexID"));
+                cityVertexIDs.Add(ExecuteQuery("insert into " + _vtCity + " values ( " + _pName + " = '" + aCity + "', " + _pInCountry + " = REF(" + _pName + " = 'UK'))", myGraphDS, transactionID).First().GetProperty<long>("VertexID"));
             }
 
             #endregion
@@ -139,21 +141,23 @@ namespace sones.GraphDBBenchmark.Import
                 {
                     for (long i = range.Item1; i < range.Item2; i++)
                     {
-                        CreateANewUser(userType, i, myGraphDS, cityVertexIDs, cityType);
+                        CreateANewUser(userType, i, myGraphDS, cityVertexIDs, cityType, transactionID);
                     }
                 });
 
             #endregion
+
+            myGraphDS.CommitTransaction(null, transactionID);
         }
 
-        public QueryResult ExecuteQuery(string myQuery, IGraphDS myGraphDS)
+        public QueryResult ExecuteQuery(string myQuery, IGraphDS myGraphDS, Int64 transactionID)
         {
-            return myGraphDS.Query(null, null, myQuery, "sones.gql");
+            return myGraphDS.Query(null, transactionID, myQuery, "sones.gql");
         }
 
-        void CreateANewUser(IVertexType myUsertype, long myCounter, IGraphDS myGraphDS, List<long> myCityVertexIDs, IVertexType myCityType)
+        void CreateANewUser(IVertexType myUsertype, long myCounter, IGraphDS myGraphDS, List<long> myCityVertexIDs, IVertexType myCityType, Int64 myTransactionID)
         {
-            myGraphDS.Insert<long>(null, null,
+            myGraphDS.Insert<long>(null, myTransactionID,
                     new RequestInsertVertex(_vtUser)
                         .AddStructuredProperty(_pName, "User" + myCounter)
                         .AddEdge(new EdgePredefinition(_pHasVisited).AddVertexID(_vtCity, myCityVertexIDs)),
@@ -203,6 +207,11 @@ namespace sones.GraphDBBenchmark.Import
 					{"countOfUsers", 	typeof(long)}
 				};
             }
+        }
+
+        public string PluginShortName
+        {
+            get { return "superNodes"; }
         }
 
         #endregion

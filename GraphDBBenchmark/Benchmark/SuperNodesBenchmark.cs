@@ -48,7 +48,9 @@ namespace sones.GraphDBBenchmark.Benchmark
 
         public void Execute(IGraphDS myGraphDS, long myIterations, Converter.WriteLineToConsole MyWriteLine)
         {
-            var vertexType = myGraphDS.GetVertexType<IVertexType>(null, null, new RequestGetVertexType("City"), (stats, vType) => vType);
+            var transactionID = myGraphDS.BeginTransaction(null);
+
+            var vertexType = myGraphDS.GetVertexType<IVertexType>(null, transactionID, new RequestGetVertexType("City"), (stats, vType) => vType);
             var inCountryProperty = vertexType.GetOutgoingEdgeDefinition("InCountry");
             var nameProperty = vertexType.GetPropertyDefinition("Name");
 
@@ -58,7 +60,7 @@ namespace sones.GraphDBBenchmark.Benchmark
             {
                 Stopwatch sw = Stopwatch.StartNew();
 
-                foreach (var aCity in myGraphDS.GetVertices<IEnumerable<IVertex>>(null, null, new RequestGetVertices("City"), (stats, v) => v))
+                foreach (var aCity in myGraphDS.GetVertices<IEnumerable<IVertex>>(null, transactionID, new RequestGetVertices("City"), (stats, v) => v))
                 {
                     var UK_Vertex = aCity.GetOutgoingSingleEdge(inCountryProperty.ID).GetTargetVertex();
                 }
@@ -67,6 +69,8 @@ namespace sones.GraphDBBenchmark.Benchmark
 
                 timeForCityCountryTraversal.Add(sw.Elapsed.TotalMilliseconds);
             }
+
+            myGraphDS.CommitTransaction(null, transactionID);
 
             String result =  GenerateTable(timeForCityCountryTraversal) + Environment.NewLine + String.Format("Average: {0}ms Median: {1}ms StandardDeviation {2}ms ", Statistics.Average(timeForCityCountryTraversal), Statistics.Median(timeForCityCountryTraversal), Statistics.StandardDeviation(timeForCityCountryTraversal));
             Console.WriteLine(result);
@@ -114,6 +118,11 @@ namespace sones.GraphDBBenchmark.Benchmark
             {
                 return new PluginParameters<Type>();
             }
+        }
+
+        public string PluginShortName
+        {
+            get { return "Supernodes"; }
         }
 
         #endregion

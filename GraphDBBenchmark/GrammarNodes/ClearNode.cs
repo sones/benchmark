@@ -44,7 +44,11 @@ namespace sones.GraphDBBenchmark.Node
 		
 		public override void EvaluateNode(EvaluationContext context, AstMode mode)
 		{
-            context.Data.Push(String.Format("Cleared the GraphDB in {0} seconds.", _graphDS.Clear<double>(null, null, new RequestClear(), (_, __) => _.ExecutionTime.TotalSeconds)));
+            var transactionID = _graphDS.BeginTransaction(null);
+
+            context.Data.Push(String.Format("Cleared the GraphDB in {0} seconds.", _graphDS.Clear<double>(null, transactionID, new RequestClear(), (_, __) => _.ExecutionTime.TotalSeconds)));
+
+            _graphDS.CommitTransaction(null, transactionID);
     	}
 	}
 }

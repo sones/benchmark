@@ -59,8 +59,10 @@ namespace sones.GraphDBBenchmark.Benchmark
 
         public void Execute(IGraphDS myGraphDS, long myIterations, Converter.WriteLineToConsole MyWriteLine)
         {
-            var vertexType = myGraphDS.GetVertexType<IVertexType>(null, null, new RequestGetVertexType(_interestingVertexType), (stats, vType) => vType);
-            var vertexList = myGraphDS.GetVertices<List<IVertex>>(null, null, new RequestGetVertices(_interestingVertexType), (stats, vertices) => vertices.ToList());
+            var transactionID = myGraphDS.BeginTransaction(null);
+
+            var vertexType = myGraphDS.GetVertexType<IVertexType>(null, transactionID, new RequestGetVertexType(_interestingVertexType), (stats, vType) => vType);
+            var vertexList = myGraphDS.GetVertices<List<IVertex>>(null, transactionID, new RequestGetVertices(_interestingVertexType), (stats, vertices) => vertices.ToList());
             List<double> tps = new List<double>();
             long edgeCount= 0;
 
@@ -74,6 +76,8 @@ namespace sones.GraphDBBenchmark.Benchmark
 
                 tps.Add(edgeCount / sw.Elapsed.TotalSeconds);
             }
+
+            myGraphDS.CommitTransaction(null, transactionID);
 
             MyWriteLine(String.Format("Traversed {0} edges.", edgeCount));
 
@@ -149,6 +153,11 @@ namespace sones.GraphDBBenchmark.Benchmark
 					{"vertexTypeName", 	typeof(String)},
 				};
             }
+        }
+
+        public string PluginShortName
+        {
+            get { return "VTPS_PartitionedParallel"; }
         }
 
         #endregion

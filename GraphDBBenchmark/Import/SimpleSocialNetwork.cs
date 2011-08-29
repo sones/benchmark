@@ -73,14 +73,16 @@ namespace GraphDBBenchmark.Import
             Random PRNG = new Random();
             List<long> vertexIDs = new List<long>();
 
+            var transactionID = myGraphDS.BeginTransaction(null);
+
             //create the user type
-            var usertype = myGraphDS.CreateVertexType<IVertexType>(null, null,
+            var usertype = myGraphDS.CreateVertexType<IVertexType>(null, transactionID,
                 new RequestCreateVertexType(
                     new VertexTypePredefinition("User")
-                        .AddProperty(new PropertyPredefinition("Name").SetAttributeType("String"))
-                        .AddProperty(new PropertyPredefinition("Age").SetAttributeType("Int32"))
+                        .AddProperty(new PropertyPredefinition("Name", "String"))
+                        .AddProperty(new PropertyPredefinition("Age", "Int32"))
                         .AddIndex(new IndexPredefinition("MyAgeIndex").SetIndexType("MultipleValueIndex").AddProperty("Age").SetVertexType("User"))
-                        .AddOutgoingEdge(new OutgoingEdgePredefinition("Friends").SetAttributeType("User").SetMultiplicityAsMultiEdge())
+                        .AddOutgoingEdge(new OutgoingEdgePredefinition("Friends", "User").SetMultiplicityAsMultiEdge())
                 ),
                 (stats, vType) => vType);
 
@@ -95,15 +97,15 @@ namespace GraphDBBenchmark.Import
                     Console.CursorLeft -= iString.Length;
                 }
 
-                vertexIDs.Add(CreateANewUser(usertype, i, vertexIDs, PRNG, myGraphDS));
+                vertexIDs.Add(CreateANewUser(usertype, i, vertexIDs, PRNG, myGraphDS, transactionID));
             }
         }
 
-        long CreateANewUser(IVertexType usertype, long i, List<long> recentVertexIDs, Random myPRNG, IGraphDS myGraphDS)
+        long CreateANewUser(IVertexType usertype, long i, List<long> recentVertexIDs, Random myPRNG, IGraphDS myGraphDS, Int64 myTransactionID)
         {
             if (recentVertexIDs.Count == 0)
             {
-                return myGraphDS.Insert<long>(null, null,
+                return myGraphDS.Insert<long>(null, myTransactionID,
                     new RequestInsertVertex("User")
                         .AddStructuredProperty("Name", "User" + i)
                         .AddStructuredProperty("Age", myPRNG.Next(18, 90)),
@@ -111,7 +113,7 @@ namespace GraphDBBenchmark.Import
             }
             else
             {
-                return myGraphDS.Insert<long>(null, null,
+                return myGraphDS.Insert<long>(null, myTransactionID,
                     new RequestInsertVertex("User")
                         .AddStructuredProperty("Name", "User" + i)
                         .AddStructuredProperty("Age", myPRNG.Next(18, 90))
@@ -206,6 +208,11 @@ namespace GraphDBBenchmark.Import
 					{"maxCountOfEdges", typeof(int)}
 				};
             }
+        }
+
+        public string PluginShortName
+        {
+            get { return "simpleNetwork"; }
         }
 
         #endregion

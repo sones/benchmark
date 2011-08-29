@@ -59,8 +59,10 @@ namespace sones.GraphDBBenchmark.Benchmark
 
         public void Execute(IGraphDS myGraphDS, long myIterations, Converter.WriteLineToConsole MyWriteLine)
         {
-            var vertexType = myGraphDS.GetVertexType<IVertexType>(null, null, new RequestGetVertexType(_interestingVertexType), (stats, vType) => vType);
-            var vertices = myGraphDS.GetVertices<IEnumerable<IVertex>>(null, null, new RequestGetVertices(_interestingVertexType), (stats, v) => v);
+            var transactionID = myGraphDS.BeginTransaction(null);
+
+            var vertexType = myGraphDS.GetVertexType<IVertexType>(null, transactionID, new RequestGetVertexType(_interestingVertexType), (stats, vType) => vType);
+            var vertices = myGraphDS.GetVertices<IEnumerable<IVertex>>(null, transactionID, new RequestGetVertices(_interestingVertexType), (stats, v) => v);
             Stopwatch sw = Stopwatch.StartNew();
 
             for (int i = 0; i < myIterations - 1; i++)
@@ -71,6 +73,8 @@ namespace sones.GraphDBBenchmark.Benchmark
             var edgeCount = CountAllEdgesPLINQ(vertices);
 
             sw.Stop();
+
+            myGraphDS.CommitTransaction(null, transactionID);
 
             MyWriteLine(String.Format("Counted {0} edges.", edgeCount));
 
@@ -127,6 +131,11 @@ namespace sones.GraphDBBenchmark.Benchmark
 					{"vertexTypeName", 	typeof(String)},
 				};
             }
+        }
+
+        public string PluginShortName
+        {
+            get { return "VTPS_PLINQ"; }
         }
 
         #endregion

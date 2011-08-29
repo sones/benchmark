@@ -84,19 +84,23 @@ namespace sones.GraphDBBenchmark
             QueryLanguages.Add(new PluginDefinition("sones.gql", GQL_Parameters));
             #endregion
 
-            #region REST Service Plugins
-            List<PluginDefinition> SonesRESTServices = new List<PluginDefinition>();
-            
-            #endregion
         
             #endregion
 
-            GraphDSPlugins PluginsAndParameters = new GraphDSPlugins(SonesRESTServices,QueryLanguages);
+            GraphDSPlugins PluginsAndParameters = new GraphDSPlugins(myIGraphQLPlugins: QueryLanguages);
 
-            _dsServer = new GraphDS_Server(GraphDB, _listeningPort, _userName, _password, IPAddress.Any, PluginsAndParameters);
-            _dsServer.LogOn(new UserPasswordCredentials(_userName, _password));
+            _dsServer = new GraphDS_Server(GraphDB, PluginsAndParameters);
 
-            _dsServer.StartRESTService("", _listeningPort, IPAddress.Any);
+            #region pre-configure REST Service
+            Dictionary<string, object> RestParameter = new Dictionary<string, object>();
+            RestParameter.Add("IPAddress", IPAddress.Any);
+            RestParameter.Add("Port", _listeningPort);
+            RestParameter.Add("Username", _userName);
+            RestParameter.Add("Password", _password);
+            _dsServer.StartService("sones.RESTService", RestParameter);
+            #endregion
+
+            _dsServer.StartService("sones.RESTService", RestParameter);            
 
             #endregion
 			
