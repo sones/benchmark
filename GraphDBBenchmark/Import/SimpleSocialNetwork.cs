@@ -152,7 +152,7 @@ namespace GraphDBBenchmark.Import
         {
             foreach (var aDestinationID in destinationVertexIDs)
             {
-                result.AddVertexID(vertexTypeID, aDestinationID);
+                result.AddEdge(new EdgePredefinition().AddVertexID(vertexTypeID, aDestinationID));
             }
         }
 
