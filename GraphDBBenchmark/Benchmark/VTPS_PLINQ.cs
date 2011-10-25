@@ -138,6 +138,12 @@ namespace sones.GraphDBBenchmark.Benchmark
             get { return "VTPS_PLINQ"; }
         }
 
+        public string PluginDescription
+        {
+            get { return "Vertex traversal per second benchmark using PLINQ"; }
+        }
+
+
         #endregion
 
         #region IDisposable Members

@@ -125,6 +125,11 @@ namespace sones.GraphDBBenchmark.Benchmark
             get { return "Supernodes"; }
         }
 
+        public string PluginDescription
+        {
+            get { return "A Benchmark that demonstrates the supernodes compatability of the GraphDB"; }
+        }
+
         #endregion
 
         #region IDisposable Members

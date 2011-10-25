@@ -81,7 +81,7 @@ namespace GraphDBBenchmark.Import
                     new VertexTypePredefinition("User")
                         .AddProperty(new PropertyPredefinition("Name", "String"))
                         .AddProperty(new PropertyPredefinition("Age", "Int32"))
-                        .AddIndex(new IndexPredefinition("MyAgeIndex").SetIndexType("MultipleValueIndex").AddProperty("Age").SetVertexType("User"))
+                        .AddIndex(new IndexPredefinition("MyAgeIndex").SetIndexType("sonesindex").AddProperty("Age").SetVertexType("User"))
                         .AddOutgoingEdge(new OutgoingEdgePredefinition("Friends", "User").SetMultiplicityAsMultiEdge())
                 ),
                 (stats, vType) => vType);
@@ -213,6 +213,11 @@ namespace GraphDBBenchmark.Import
         public string PluginShortName
         {
             get { return "simpleNetwork"; }
+        }
+
+        public string PluginDescription
+        {
+            get { return "Creates a simple social network"; }
         }
 
         #endregion

@@ -138,6 +138,11 @@ namespace sones.GraphDBBenchmark.Benchmark
             get { return "VTPS_Parallel"; }
         }
 
+        public string PluginDescription
+        {
+            get { return "Vertex traversal per second benchmark using nothing but a Parallel.ForEach"; }
+        }
+
         #endregion
 
         #region IDisposable Members

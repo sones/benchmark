@@ -160,6 +160,11 @@ namespace sones.GraphDBBenchmark.Benchmark
             get { return "VTPS_PartitionedParallel"; }
         }
 
+        public string PluginDescription
+        {
+            get { return "Vertex traversal per second benchmark using Parallel.For based on a partition"; }
+        }
+
         #endregion
 
         #region IDisposable Members

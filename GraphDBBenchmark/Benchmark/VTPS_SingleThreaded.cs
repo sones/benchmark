@@ -135,6 +135,11 @@ namespace sones.GraphDBBenchmark.Benchmark
             get { return "VTPS_SingleThreaded"; }
         }
 
+        public string PluginDescription
+        {
+            get { return "Vertex traversal per second benchmark using a single thread"; }
+        }
+
         #endregion
 
         #region IDisposable Members

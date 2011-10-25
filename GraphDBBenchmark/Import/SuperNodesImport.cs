@@ -214,6 +214,11 @@ namespace sones.GraphDBBenchmark.Import
             get { return "superNodes"; }
         }
 
+        public string PluginDescription
+        {
+            get { return "Creates a supernode scenario"; }
+        }
+
         #endregion
 
         #region IDisposable Members
